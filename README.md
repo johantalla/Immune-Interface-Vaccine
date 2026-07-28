@@ -1,6 +1,7 @@
 ## How to Run
 
 This pipeline spans two environments: a **laptop/local machine** (for lightweight scripting, alignment, and analysis) and an **HPC cluster with GPU access** (for Boltz-2 structure prediction). DiscoTope can run on either, but is much faster on the HPC given the dataset size.
+I've left some of the files I generated so you can run statistical analysis on my dataset for curiosity
 
 ### 1. Environment setup
 
