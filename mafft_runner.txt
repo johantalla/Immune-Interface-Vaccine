@@ -1,0 +1,6 @@
+for f in gene_*.fasta; do
+  name=$(basename "$f" .fasta)
+  mafft --auto "$f" > "aligned_${name}.fasta"
+done
+
+// Run MAFFT for each gene alignment
