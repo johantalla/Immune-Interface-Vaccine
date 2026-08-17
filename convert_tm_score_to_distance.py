@@ -1,5 +1,7 @@
 from scipy.cluster.hierarchy import linkage
 from scipy.spatial.distance import squareform
+import pandas as pd
+import numpy as np
 
 def get_linkage(gene_df):
     
@@ -20,20 +22,20 @@ def get_linkage(gene_df):
         dist.loc[s, s] = 0
 
         # Fill with TM-score distances
-        for _, row in gene_df.iterrows():
+    for _, row in gene_df.iterrows():
 
-            distance = 1 - row["tm_score"]
+        distance = 1 - row["tm_score"]
 
-            dist.loc[row["seq1"], row["seq2"]] = distance
-            dist.loc[row["seq2"], row["seq1"]] = distance
+        dist.loc[row["seq1"], row["seq2"]] = distance
+        dist.loc[row["seq2"], row["seq1"]] = distance
 
 
-        # Convert to scipy condensed format
-        condensed = squareform(dist.values)
+    # Convert to scipy condensed format
+    condensed = squareform(dist.values)
 
-        # Hierarchical clustering - use complete (discus this in notes)
-        Z = linkage(
-            condensed,
-            method="complete",
-        )
-        return Z,structuress
+    # Hierarchical clustering - use complete (discus this in notes)
+    Z = linkage(
+        condensed,
+        method="complete",
+    )
+    return Z,structures
