@@ -1,6 +1,8 @@
 import pandas as pd
 from Bio import SeqIO
 import json
+import numpy as np
+from pathlib import Path
 
 discotope = pd.read_csv(
     "wzg_epitope_conservation/wzg_discotope.csv"
@@ -88,6 +90,7 @@ mapped.to_csv(
 # Calculate epitope conservation
 # --------------------------------
 
+
 conservation = (
     mapped
     .groupby("msa_position")
@@ -174,6 +177,9 @@ if high:
 
     regions.append((start, previous))
 
+# Store regions which pass our minimum length requirement
+candidate_regions = []
+
 print("Candidate regions:")
 
 for start, end in regions:
@@ -181,6 +187,9 @@ for start, end in regions:
     length = end - start + 1
 
     if length >= 5:
+        # Save this region as a candidate
+        candidate_regions.append((start, end))
+
         region_conservation = conservation[
             conservation["msa_position"].between(start, end)
         ]
@@ -224,3 +233,156 @@ for start, end in regions:
                 f"Mean RSA: "
                 f"{position_df['rsa'].mean():.3f}"
             )
+
+candidate_df = pd.DataFrame(
+    candidate_regions,
+    columns=["start", "end"]
+)
+
+candidate_df.to_csv(
+    "wzg_epitope_conservation/wzg_candidate_regions.csv",
+    index=False
+)
+
+plddt_root = Path("boltz_outputs/predictions")
+plddt_results = []
+
+'''for start,end in candidate_regions:
+    for protein,protein_df in mapped.groupby("protein"):
+
+        seq_name = protein.removesuffix("_A")
+
+        plddt_file = (
+            plddt_root
+            / seq_name
+            / f"plddt_{seq_name}_model_0.npz"
+        )
+
+        if not plddt_file.exists():
+            print(f"Missing plDDT file: {seq_name}")
+            continue
+
+        #Load the boltz per residue plDDT
+        plddt = np.load(plddt_file)["plddt"]
+
+        #Find the actual residues corresponding to MSA region
+
+        region_df = protein_df[
+            protein_df["msa_position"].between(start,end)
+        ]
+
+        residue_ids = region_df["res_id"].astype(int).tolist()
+
+        if len(residue_ids) == 0:
+            continue
+
+        local_plddt = np.array([
+            plddt[res_id-1]
+            for res_id in residue_ids
+        ])
+
+        plddt_results.append({
+            "protein": seq_name,
+            "region": f"{start}-{end}",
+            "n_residues": len(local_plddt),
+            "mean_plddt": local_plddt.mean(),
+            "median_plddt": np.median(local_plddt),
+            "min_plddt": local_plddt.min(),
+            "max_plddt": local_plddt.max()
+        })
+
+plddt_df = pd.DataFrame(plddt_results)
+
+plddt_df.to_csv(
+    "wzg_epitope_conservation/wzg_candidate_plddt.csv",
+    index=False
+)
+
+print("\nLocal pLDDT summary:")
+
+summary = (
+    plddt_df
+    .groupby("region")
+    .agg(
+        n_variants=("protein", "nunique"),
+        mean_local_plddt=("mean_plddt", "mean"),
+        median_local_plddt=("median_plddt", "median"),
+        worst_variant_mean=("mean_plddt", "min"),
+        best_variant_mean=("mean_plddt", "max")
+    )
+)'''
+
+pae_results = []
+
+for start, end in candidate_regions:
+
+    for protein, protein_df in mapped.groupby("protein"):
+
+        seq_name = protein.removesuffix("_A")
+
+        pae_file = (
+            plddt_root
+            / seq_name
+            / f"pae_{seq_name}_model_0.npz"
+        )
+
+        if not pae_file.exists():
+            print(f"Missing PAE file: {seq_name}")
+            continue
+
+        pae = np.load(pae_file)["pae"]
+
+        # Get actual residue IDs corresponding to this MSA region
+        region_df = protein_df[
+            protein_df["msa_position"].between(start, end)
+        ]
+
+        residue_ids = region_df["res_id"].astype(int).tolist()
+
+        if len(residue_ids) == 0:
+            continue
+
+        # convert residue IDs to zero-based indices
+        idx = np.array(residue_ids) - 1
+
+        # square submatrix: all residue-vs-residue PAE values
+        # within this candidate region
+        local_pae = pae[np.ix_(idx, idx)]
+
+        off_diagonal = local_pae[~np.eye(
+            local_pae.shape[0],
+            dtype=bool
+        )]
+
+        pae_results.append({
+            "protein": seq_name,
+            "region": f"{start}-{end}",
+            "n_residues": len(residue_ids),
+            "mean_pae": off_diagonal.mean(),
+            "median_pae": np.median(off_diagonal),
+            "max_pae": off_diagonal.max()
+        })
+
+
+pae_df = pd.DataFrame(pae_results)
+
+pae_df.to_csv(
+    "wzg_epitope_conservation/wzg_candidate_pae.csv",
+    index=False
+)
+
+print("\nLocal PAE summary:")
+
+pae_summary = (
+    pae_df
+    .groupby("region")
+    .agg(
+        n_variants=("protein", "nunique"),
+        mean_local_pae=("mean_pae", "mean"),
+        median_local_pae=("median_pae", "median"),
+        worst_variant_mean=("mean_pae", "max"),
+        best_variant_mean=("mean_pae", "min")
+    )
+)
+
+print(pae_summary)
