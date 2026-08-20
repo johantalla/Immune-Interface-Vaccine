@@ -386,3 +386,185 @@ pae_summary = (
 )
 
 print(pae_summary)
+
+# ============================================================
+# Sequence conservation vs epitope conservation
+# ============================================================
+
+plot_data = []
+
+for position in sorted(mapped["msa_position"].unique()):
+
+    position_df = mapped[
+        mapped["msa_position"] == position
+    ]
+
+    # -------------------------
+    # Sequence conservation
+    # -------------------------
+
+    residues = position_df["residue"].dropna()
+
+    # Ignore gaps if they exist in mapped
+    residues = residues[residues != "-"]
+
+    if len(residues) > 0:
+        residue_counts = residues.value_counts()
+
+        sequence_conservation = (
+            residue_counts.iloc[0] / len(residues) * 100
+        )
+    else:
+        sequence_conservation = 0
+
+    # -------------------------
+    # Epitope conservation
+    # -------------------------
+
+    epitope_conservation = (
+        position_df["epitope"].mean() * 100
+    )
+
+    plot_data.append({
+        "msa_position": position,
+        "sequence_conservation_percent": sequence_conservation,
+        "epitope_conservation_percent": epitope_conservation
+    })
+
+
+comparison = pd.DataFrame(plot_data)
+
+
+# ============================================================
+# Plot whole Wzg protein
+# ============================================================
+
+fig, ax = plt.subplots(figsize=(16, 6))
+
+ax.plot(
+    comparison["msa_position"],
+    comparison["sequence_conservation_percent"],
+    label="Sequence conservation"
+)
+
+ax.plot(
+    comparison["msa_position"],
+    comparison["epitope_conservation_percent"],
+    label="Epitope conservation"
+)
+
+# Your epitope threshold
+ax.axhline(
+    50,
+    linestyle="--",
+    label="Epitope threshold (50%)"
+)
+
+# Highlight candidate regions
+for start, end in regions:
+
+    if end - start + 1 >= 5:
+        ax.axvspan(
+            start,
+            end,
+            alpha=0.2
+        )
+
+ax.set_xlabel("MSA position")
+ax.set_ylabel("Conservation (%)")
+
+ax.set_ylim(0, 105)
+
+ax.set_title(
+    "Wzg sequence conservation vs predicted epitope conservation"
+)
+
+ax.legend()
+
+plt.tight_layout()
+
+plt.savefig(
+    "wzg_epitope_conservation/"
+    "sequence_vs_epitope_conservation.png",
+    dpi=300
+)
+
+plt.show()
+
+# ============================================================
+# Zoom around each candidate region
+# ============================================================
+
+FLANK = 20
+
+for start, end in regions:
+
+    if end - start + 1 < 5:
+        continue
+
+    zoom_start = max(
+        comparison["msa_position"].min(),
+        start - FLANK
+    )
+
+    zoom_end = min(
+        comparison["msa_position"].max(),
+        end + FLANK
+    )
+
+    zoom = comparison[
+        comparison["msa_position"].between(
+            zoom_start,
+            zoom_end
+        )
+    ]
+
+    fig, ax = plt.subplots(figsize=(14, 6))
+
+    ax.plot(
+        zoom["msa_position"],
+        zoom["sequence_conservation_percent"],
+        marker="o",
+        label="Sequence conservation"
+    )
+
+    ax.plot(
+        zoom["msa_position"],
+        zoom["epitope_conservation_percent"],
+        marker="o",
+        label="Epitope conservation"
+    )
+
+    ax.axhline(
+        50,
+        linestyle="--",
+        label="Epitope threshold (50%)"
+    )
+
+    ax.axvspan(
+        start,
+        end,
+        alpha=0.2,
+        label="Candidate epitope"
+    )
+
+    ax.set_xlabel("MSA position")
+    ax.set_ylabel("Conservation (%)")
+
+    ax.set_ylim(0, 105)
+
+    ax.set_title(
+        f"Wzg candidate region {start}-{end}"
+    )
+
+    ax.legend()
+
+    plt.tight_layout()
+
+    plt.savefig(
+        "wzg_epitope_conservation/"
+        f"conservation_zoom_{start}_{end}.png",
+        dpi=300
+    )
+
+    plt.show()
