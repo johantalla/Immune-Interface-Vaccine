@@ -1,13 +1,15 @@
 import argparse
 
-parser = argparse.ArgumentParser()
+def get_gene():
 
-parser.add_argument(
-    "--gene",
-    required=True,
-    help="Gene to analyse, e.g. wzg, wzh, wzd"
-)
+    parser = argparse.ArgumentParser()
 
-args = parser.parse_args()
+    parser.add_argument(
+        "--gene",
+        required=True,
+        help="Gene to analyse, e.g. wzg, wzh, wzd"
+    )
 
-GENE = args.gene
+    args = parser.parse_args()
+
+    return args.gene

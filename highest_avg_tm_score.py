@@ -1,10 +1,10 @@
 import pandas as pd
+from config import get_gene
 
-
-gene = "wzg"
+GENE = get_gene()
 
 tm_df = pd.read_csv("tm_align_results.csv")
-gene_df = tm_df[tm_df["gene"] == gene]
+gene_df = tm_df[tm_df["gene"] == GENE]
 
 # average TM-score per structure, across all its pairings
 avg_scores = pd.concat([

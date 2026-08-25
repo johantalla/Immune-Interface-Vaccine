@@ -1,7 +1,9 @@
 from Bio import SeqIO
 from pathlib import Path
 import pandas as pd
-from config import GENE
+from config import get_gene
+
+GENE = get_gene()
 
 #all the paths nad settings
 

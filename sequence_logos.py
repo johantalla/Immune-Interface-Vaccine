@@ -1,7 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import logomaker
-from config import GENE
+from config import get_gene
+
+GENE = get_gene()
 
 from Bio import SeqIO
 from pathlib import Path

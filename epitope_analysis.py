@@ -3,7 +3,9 @@ from Bio import SeqIO
 import json
 import numpy as np
 from pathlib import Path
-from config import GENE
+from config import get_gene
+
+GENE = get_gene()
 
 discotope = pd.read_csv(
     f"{GENE}_epitope_conservation/{GENE}_discotope.csv"

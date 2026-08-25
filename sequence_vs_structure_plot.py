@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 from Bio import SeqIO
 from Bio import Align
 import json
-from config import GENE
+from config import get_gene
+
+GENE = get_gene()
 
 # Load TM-align results
 df = pd.read_csv("tm_align_results.csv")

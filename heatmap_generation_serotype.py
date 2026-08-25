@@ -5,7 +5,9 @@ import re
 from structure_utils import get_serotype
 from convert_tm_score_to_distance import get_linkage
 from scipy.cluster.hierarchy import dendrogram
-from config import GENE
+from config import get_gene
+
+GENE = get_gene()
 
 df = pd.read_csv("tm_align_results.csv")
 
