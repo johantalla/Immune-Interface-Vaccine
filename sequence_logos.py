@@ -1,18 +1,18 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import logomaker
+from config import GENE
 
 from Bio import SeqIO
 from pathlib import Path
 
-
-MSA_FILE = "aligned_cps/aligned_gene_wzg.fasta"
+MSA_FILE = f"aligned_cps/aligned_gene_{GENE}.fasta"
 
 CANDIDATE_FILE = (
-    "wzg_epitope_conservation/wzg_candidate_regions.csv"
+    f"{GENE}_epitope_conservation/{GENE}_candidate_regions.csv"
 )
 
-OUTPUT_DIR = Path("wzg_epitope_conservation/sequence_logos")
+OUTPUT_DIR = Path(f"{GENE}_epitope_conservation/sequence_logos")
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True) 
 
@@ -88,7 +88,7 @@ for _, candidate in candidates.iterrows():
 
     output_file = (
         OUTPUT_DIR /
-        f"wzg_{start}_{end}_sequence_logo.png"
+        f"{GENE}_{start}_{end}_sequence_logo.png"
     )
 
     plt.savefig(

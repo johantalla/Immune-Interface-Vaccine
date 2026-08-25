@@ -9,23 +9,25 @@ from Bio.PDB import PDBParser, PDBIO, Select
 # PATHS
 # ============================================================
 
-MSA_FILE = Path("aligned_cps/aligned_gene_wzg.fasta")
+GENE = "wzg"
+
+MSA_FILE = Path(f"aligned_cps/aligned_gene_{GENE}.fasta")
 
 FRAGMENT_METADATA = Path(
-    "wzg_epitope_conservation/"
+    f"{GENE}_epitope_conservation/"
     "epitope_fragments/"
-    "wzg_epitope_fragment_metadata.csv"
+    f"{GENE}_epitope_fragment_metadata.csv"
 )
 
 UNIQUE_FRAGMENTS = Path(
-    "wzg_epitope_conservation/"
+    f"{GENE}_epitope_conservation/"
     "epitope_fragments/"
-    "wzg_unique_epitope_fragments.csv"
+    f"{GENE}_unique_epitope_fragments.csv"
 )
 
 # Your 42 newly downloaded structures
 FRAGMENT_STRUCTURE_DIR = Path(
-    "wzg_epitope_conservation/"
+    f"{GENE}_epitope_conservation/"
     "epitope_fragments/"
     "predicted_structures"
 )
@@ -34,7 +36,7 @@ FRAGMENT_STRUCTURE_DIR = Path(
 FULL_STRUCTURE_DIR = Path("pdb_outputs/pdb_outputs")
 
 OUTPUT_DIR = Path(
-    "wzg_epitope_conservation/"
+    f"{GENE}_epitope_conservation/"
     "fragment_structure_comparison"
 )
 
@@ -61,18 +63,18 @@ print(f"Unique fragments: {len(unique)}")
 
 
 # ============================================================
-# BUILD SPC -> wzg_seqN MAPPING
+# BUILD SPC -> gene_seqN MAPPING
 #
 # IMPORTANT:
 # The order here must correspond to the order originally used
-# to generate wzg_seq0 ... wzg_seq63.
+# to generate gene_seq0 ... gene_seq63.
 # ============================================================
 
 spc_to_seq = {}
 
 for i, record in enumerate(msa_records):
 
-    spc_to_seq[record.id] = f"wzg_seq{i}"
+    spc_to_seq[record.id] = f"{GENE}_seq{i}"
 
 print(f"Sequence mappings: {len(spc_to_seq)}")
 
@@ -102,13 +104,13 @@ def extract_native_fragment(
 ):
     """
     Extract a residue range from the original full-length
-    Wzg structure.
+    GENE structure.
     """
 
     parser = PDBParser(QUIET=True)
 
     structure = parser.get_structure(
-        "wzg",
+        GENE,
         str(input_cif)
     )
 
@@ -254,7 +256,7 @@ for _, row in unique.iterrows():
     fragment_end = int(match["fragment_end"])
 
     # --------------------------------------------------------
-    # Find wzg_seqN
+    # Find gene_seqN
     # --------------------------------------------------------
 
     if representative not in spc_to_seq:
@@ -288,7 +290,7 @@ for _, row in unique.iterrows():
     # --------------------------------------------------------
 
     fragment_name = (
-        f"wzg_{msa_start}_{msa_end}"
+        f"{GENE}_{msa_start}_{msa_end}"
         f"_flank{flank}"
         f"_variant{variant}"
     )
@@ -358,7 +360,7 @@ for _, row in unique.iterrows():
         "variant": variant,
 
         "representative_protein": representative,
-        "wzg_sequence": seq_name,
+        f"{GENE}_sequence": seq_name,
 
         "fragment_start": fragment_start,
         "fragment_end": fragment_end,
@@ -377,7 +379,7 @@ results_df = pd.DataFrame(results)
 
 OUTPUT_FILE = (
     OUTPUT_DIR /
-    "wzg_fragment_tm_align_results.csv"
+    f"{GENE}_fragment_tm_align_results.csv"
 )
 
 results_df.to_csv(

@@ -5,10 +5,10 @@ import re
 from structure_utils import get_serotype
 from convert_tm_score_to_distance import get_linkage
 from scipy.cluster.hierarchy import dendrogram
+from config import GENE
 
 df = pd.read_csv("tm_align_results.csv")
-gene = "wzg"
-gene_df = df[df["gene"] == gene]
+gene_df = df[df["gene"] == GENE]
 
 def get_serogroup(serotype_label):
     """e.g. 'SPC15A' -> '15', 'SPC01' -> '01'"""
@@ -55,9 +55,9 @@ for sg, members in serogroups.items():
     plt.yticks(range(len(sub_labels)), sub_labels, fontsize=8)
     cbar = plt.colorbar()
     cbar.set_label("TM-score")
-    plt.title(f"Serogroup {sg} — {gene} structural alignment")
+    plt.title(f"Serogroup {sg} — {GENE} structural alignment")
     plt.tight_layout()
-    plt.savefig(f"heatmap_serogroup_{sg}_{gene}.png")
+    plt.savefig(f"heatmap_serogroup_{sg}_{GENE}.png")
     plt.close()
 
 print(f"Generated heatmaps for {sum(1 for m in serogroups.values() if len(m) >= 2)} serogroups")

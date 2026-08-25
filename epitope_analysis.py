@@ -3,12 +3,13 @@ from Bio import SeqIO
 import json
 import numpy as np
 from pathlib import Path
+from config import GENE
 
 discotope = pd.read_csv(
-    "wzg_epitope_conservation/wzg_discotope.csv"
+    f"{GENE}_epitope_conservation/{GENE}_discotope.csv"
 )
 
-alignment_file = "wzg_epitope_conservation/aligned_gene_wzg.fasta"
+alignment_file = f"{GENE}_epitope_conservation/aligned_gene_{GENE}.fasta"
 
 # Load JSON mapping
 with open("id_mapping.json") as f:
@@ -27,17 +28,17 @@ mapped_rows = []
 
 for protein, protein_df in discotope.groupby("protein"):
 
-    # wzg_seq0_A -> wzg_seq0
+    # gene_seq0_A -> gene_seq0
     seq_name = protein.removesuffix("_A")
 
-    # wzg_seq0 -> wzg_seq0.fasta
+    # gene_seq0 -> gene_seq0.fasta
     mapping_key = seq_name + ".fasta"
 
     if mapping_key not in mapping:
         print(f"WARNING: {mapping_key} not found in mapping")
         continue
 
-    # wzg_seq0.fasta -> SPC01_0005_wzg
+    # gene_seq0.fasta -> SPC01_0005_gene
     msa_name = mapping[mapping_key]
 
     if msa_name not in aligned_sequences:
@@ -82,7 +83,7 @@ for protein, protein_df in discotope.groupby("protein"):
 mapped = pd.DataFrame(mapped_rows)
 
 mapped.to_csv(
-    "wzg_epitope_conservation/wzg_discotope_msa_mapped.csv",
+    f"{GENE}_epitope_conservation/{GENE}_discotope_msa_mapped.csv",
     index=False
 )
 
@@ -114,7 +115,7 @@ conservation["epitope_conservation_percent"] = (
 )
 
 conservation.to_csv(
-    "wzg_epitope_conservation/wzg_epitope_conservation.csv",
+    f"{GENE}_epitope_conservation/{GENE}_epitope_conservation.csv",
     index=False
 )
 
@@ -147,7 +148,7 @@ plt.title(
 plt.tight_layout()
 
 plt.savefig(
-    "wzg_epitope_conservation/wzg_epitope_conservation.png",
+    f"{GENE}_epitope_conservation/{GENE}_epitope_conservation.png",
     dpi=300
 )
 
@@ -240,7 +241,7 @@ candidate_df = pd.DataFrame(
 )
 
 candidate_df.to_csv(
-    "wzg_epitope_conservation/wzg_candidate_regions.csv",
+    f"{GENE}_epitope_conservation/{GENE}_candidate_regions.csv",
     index=False
 )
 
@@ -294,7 +295,7 @@ plddt_results = []
 plddt_df = pd.DataFrame(plddt_results)
 
 plddt_df.to_csv(
-    "wzg_epitope_conservation/wzg_candidate_plddt.csv",
+    f"{GENE}_epitope_conservation/{GENE}_candidate_plddt.csv",
     index=False
 )
 
@@ -367,7 +368,7 @@ for start, end in candidate_regions:
 pae_df = pd.DataFrame(pae_results)
 
 pae_df.to_csv(
-    "wzg_epitope_conservation/wzg_candidate_pae.csv",
+    f"{GENE}_epitope_conservation/{GENE}_candidate_pae.csv",
     index=False
 )
 
@@ -484,7 +485,7 @@ ax.legend()
 plt.tight_layout()
 
 plt.savefig(
-    "wzg_epitope_conservation/"
+    f"{GENE}_epitope_conservation/"
     "sequence_vs_epitope_conservation.png",
     dpi=300
 )
@@ -562,7 +563,7 @@ for start, end in regions:
     plt.tight_layout()
 
     plt.savefig(
-        "wzg_epitope_conservation/"
+        f"{GENE}_epitope_conservation/"
         f"conservation_zoom_{start}_{end}.png",
         dpi=300
     )

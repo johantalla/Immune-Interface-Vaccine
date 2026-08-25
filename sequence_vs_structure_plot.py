@@ -3,12 +3,11 @@ import matplotlib.pyplot as plt
 from Bio import SeqIO
 from Bio import Align
 import json
-
-gene = "wzg"
+from config import GENE
 
 # Load TM-align results
 df = pd.read_csv("tm_align_results.csv")
-gene_df = df[df["gene"] == gene].copy()
+gene_df = df[df["gene"] == GENE].copy()
 
 # Load mapping
 with open("id_mapping.json") as f:
@@ -17,7 +16,7 @@ with open("id_mapping.json") as f:
 # Load all Wzg sequences from the ONE fasta file
 sequences = {
     record.id: str(record.seq)
-    for record in SeqIO.parse(f"genes/gene_{gene}.fasta" , "fasta")
+    for record in SeqIO.parse(f"genes/gene_{GENE}.fasta" , "fasta")
 }
 
 # Set up pairwise sequence aligner
@@ -61,7 +60,7 @@ gene_df["sequence_identity"] = identities
 
 # Save results
 gene_df.to_csv(
-    f"{gene}_sequence_identity_vs_tm_score.csv",
+    f"{GENE}_sequence_identity_vs_tm_score.csv",
     index=False
 )
 
@@ -104,7 +103,7 @@ plt.tight_layout()
 plt.show()
 
 
-'''plt.figure(figsize=(8, 6))
+plt.figure(figsize=(8, 6))
 
 plt.scatter(
     gene_df["sequence_identity"] * 100,
@@ -123,12 +122,12 @@ plt.grid(alpha=0.3)
 plt.tight_layout()
 
 plt.savefig(
-    f"{gene}_sequence_identity_vs_tm_score.png",
+    f"{GENE}_sequence_identity_vs_tm_score.png",
     dpi=300
 )
 
 plt.show()
-'''
+
 suspicious = gene_df[
     (gene_df["sequence_identity"] >= 0.95) &
     (gene_df["tm_score"] <= 0.4)
@@ -139,7 +138,7 @@ print(suspicious[
 ])
 
 suspicious.to_csv(
-    "wzg_high_sequence_low_TM.csv",
+    f"{GENE}_high_sequence_low_TM.csv",
     index=False
 )
 

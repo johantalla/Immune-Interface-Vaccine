@@ -1,0 +1,91 @@
+serotype,wzg_present,wzg_protein,motif,exact_dominant_motif,motif_distance,coverage_status
+SCP46,False,,,False,,No Wzg
+SPC01,True,SPC01_0005_wzg,LTDGDR,False,1.0,Single-residue variant
+SPC02,False,,,False,,No Wzg
+SPC03,False,,,False,,No Wzg
+SPC04,True,SPC04_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC05,False,,,False,,No Wzg
+SPC06A,True,SPC06A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC06B,True,SPC06B_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC07A,True,SPC07A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC07B,True,SPC07B_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC07C,True,SPC07C_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC07F,False,,,False,,No Wzg
+SPC08,True,SPC08_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC09A,True,SPC09A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC09L,True,SPC09L_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC09N,True,SPC09N_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC09V,True,SPC09V_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC10A,True,SPC10A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC10B,True,SPC10B_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC10C,True,SPC10C_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC10F,True,SPC10F_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC11A,True,SPC11A_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC11B,True,SPC11B_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC11C,True,SPC11C_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC11D,True,SPC11D_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC11F,False,,,False,,No Wzg
+SPC12A,False,,,False,,No Wzg
+SPC12B,True,SPC12B_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC12F,False,,,False,,No Wzg
+SPC13,True,SPC13_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC14,True,SPC14_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC15A,True,SPC15A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC15B,True,SPC15B_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC15C,True,SPC15C_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC15F,False,,,False,,No Wzg
+SPC16A,True,SPC16A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC16F,True,SPC16F_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC17A,True,SPC17A_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC17F,True,SPC17F_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC18A,True,SPC18A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC18B,True,SPC18B_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC18C,True,SPC18C_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC18F,True,SPC18F_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC19A,True,SPC19A_0003_wzg,LADGDH,False,1.0,Single-residue variant
+SPC19B,True,SPC19B_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC19C,True,SPC19C_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC19F,True,SPC19F_0005_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC20,True,SPC20_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC21,False,,,False,,No Wzg
+SPC22A,True,SPC22A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC22F,True,SPC22F_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC23A,True,SPC23A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC23B,False,,,False,,No Wzg
+SPC23F,True,SPC23F_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC24A,False,,,False,,No Wzg
+SPC24B,False,,,False,,No Wzg
+SPC24F,False,,,False,,No Wzg
+SPC25A,True,SPC25A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC25F,True,SPC25F_0009_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC27,False,,,False,,No Wzg
+SPC28A,False,,,False,,No Wzg
+SPC28F,True,SPC28F_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC29,True,SPC29_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC31,True,SPC31_0004_wzg,LTDGDR,False,1.0,Single-residue variant
+SPC32A,False,,,False,,No Wzg
+SPC32F,False,,,False,,No Wzg
+SPC33A,True,SPC33A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC33B,True,SPC33B_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC33C,True,SPC33C_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC33D,True,SPC33D_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC33F,True,SPC33F_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC34,True,SPC34_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC35A,True,SPC35A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC35B,False,,,False,,No Wzg
+SPC35C,False,,,False,,No Wzg
+SPC35F,False,,,False,,No Wzg
+SPC36,True,SPC36_0003_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC37,True,SPC37_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC38,True,SPC38_0010_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC39,True,SPC39_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC40,False,,,False,,No Wzg
+SPC41A,True,SPC41A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC41F,False,,,False,,No Wzg
+SPC42,False,,,False,,No Wzg
+SPC43,True,SPC43_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC44,False,,,False,,No Wzg
+SPC45,False,,,False,,No Wzg
+SPC47A,True,SPC47A_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC47F,True,SPC47F_0004_wzg,LADGDR,True,0.0,Exact dominant motif
+SPC48,True,SPC48_0004_wzg,LADGDR,True,0.0,Exact dominant motif

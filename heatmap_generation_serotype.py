@@ -5,12 +5,11 @@ import re
 from structure_utils import get_serotype
 from convert_tm_score_to_distance import get_linkage
 from scipy.cluster.hierarchy import dendrogram
-
+from config import GENE
 
 df = pd.read_csv("tm_align_results.csv")
 
-gene = "wzg" # Gene for which the heat map is beign generated for
-gene_df = df[df["gene"] == "wzg"]
+gene_df = df[df["gene"] == GENE]
 Z, structures = get_linkage(gene_df)
 
 dendro = dendrogram(

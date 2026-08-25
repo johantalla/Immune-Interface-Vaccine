@@ -1,14 +1,16 @@
 from Bio import SeqIO
 from pathlib import Path
 import pandas as pd
+from config import GENE
 
 #all the paths nad settings
 
-MSA_FILE = "aligned_cps/aligned_gene_wzg.fasta"
 
-CANDIDATE_FILE = ("wzg_epitope_conservation/wzg_candidate_regions.csv")
+MSA_FILE = f"aligned_cps/aligned_gene_{GENE}.fasta"
 
-OUTPUT_DIR = Path("wzg_epitope_conservation/epitope_fragments")
+CANDIDATE_FILE = (f"{GENE}_epitope_conservation/{GENE}_candidate_regions.csv")
+
+OUTPUT_DIR = Path(f"{GENE}_epitope_conservation/epitope_fragments")
 
 OUTPUT_DIR.mkdir(parents=True,exist_ok=True)
 
@@ -49,7 +51,7 @@ for _,candidate in candidates.iterrows():
 
     for flank in FLANK_SIZES:
 
-        output_file = (OUTPUT_DIR / f"wzg_{msa_start}_{msa_end}_flank{flank}.fasta")
+        output_file = (OUTPUT_DIR / f"{GENE}_{msa_start}_{msa_end}_flank{flank}.fasta")
 
         with open(output_file,"w") as handle:
 
@@ -107,7 +109,7 @@ for _,candidate in candidates.iterrows():
 metadata = pd.DataFrame(fragment_metadata)
 
 metadata_file = (
-    OUTPUT_DIR / "wzg_epitope_fragment_metadata.csv"
+    OUTPUT_DIR / f"{GENE}_epitope_fragment_metadata.csv"
 )
 
 metadata.to_csv(
@@ -154,7 +156,7 @@ unique_fragments["variant"] = (
 )
 
 unique_file = (
-    OUTPUT_DIR / "wzg_unique_epitope_fragments.csv"
+    OUTPUT_DIR / f"{GENE}_nique_epitope_fragments.csv"
 )
 
 unique_fragments.to_csv(
@@ -189,7 +191,7 @@ for _, row in unique_fragments.iterrows():
     sequence = row["fragment_sequence"]
 
     name = (
-        f"wzg_{start}_{end}"
+        f"{GENE}_{start}_{end}"
         f"_flank{flank}"
         f"_variant{variant}"
     )
