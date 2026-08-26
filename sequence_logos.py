@@ -76,7 +76,7 @@ for _, candidate in candidates.iterrows():
         color_scheme="chemistry"
     )
 
-    ax.set_title(f" Wzg candidate epitope: MSA Positions {start}-{end}")
+    ax.set_title(f" {GENE} candidate epitope: MSA Positions {start}-{end}")
 
     ax.set_xlabel("MSA position")
     ax.set_ylabel("Amino acid frequency")
