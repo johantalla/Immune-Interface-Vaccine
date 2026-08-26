@@ -69,13 +69,14 @@ for _,candidate in candidates.iterrows():
 
                 if seq_start is None or seq_end is None:
                     print(f"SKipping {record.id}: gap at the candidate boundary {msa_start}-{msa_end}")
+                    continue
 
                 fragment_start = max(1,seq_start-flank)
                 fragment_end = min(len(raw_sequence),seq_end + flank)
 
                 fragment = raw_sequence[fragment_start -1:fragment_end]
 
-                epitope = raw_sequence[seq_start:seq_end]
+                epitope = raw_sequence[seq_start -1 :seq_end]
 
                 # writing the fastfile
 
@@ -158,7 +159,7 @@ unique_fragments["variant"] = (
 )
 
 unique_file = (
-    OUTPUT_DIR / f"{GENE}_nique_epitope_fragments.csv"
+    OUTPUT_DIR / f"{GENE}_unique_epitope_fragments.csv"
 )
 
 unique_fragments.to_csv(

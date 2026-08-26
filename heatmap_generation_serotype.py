@@ -75,7 +75,7 @@ plt.yticks(
 cbar = plt.colorbar()
 cbar.set_label("TM-score")
 
-plt.title("Structural Alignment Heatmap for Wzg proteins")
+plt.title(f"Structural Alignment Heatmap for {GENE} proteins")
 
 plt.tight_layout()
 plt.show()

@@ -4,6 +4,7 @@ import json
 import numpy as np
 from pathlib import Path
 from config import get_gene
+import matplotlib.pyplot as plt
 
 GENE = get_gene()
 
@@ -11,7 +12,7 @@ discotope = pd.read_csv(
     f"{GENE}_epitope_conservation/{GENE}_discotope.csv"
 )
 
-alignment_file = f"{GENE}_epitope_conservation/aligned_gene_{GENE}.fasta"
+alignment_file = f"aligned_cps/aligned_gene_{GENE}.fasta"
 
 # Load JSON mapping
 with open("id_mapping.json") as f:
@@ -129,7 +130,6 @@ print(
     ).head(20)
 )
 
-import matplotlib.pyplot as plt
 
 plt.figure(figsize=(14, 5))
 
@@ -138,13 +138,13 @@ plt.plot(
     conservation["epitope_conservation_percent"]
 )
 
-plt.xlabel("Wzg MSA position")
+plt.xlabel(f"{GENE} MSA position")
 plt.ylabel("Predicted epitope conservation (%)")
 
 plt.ylim(0, 100)
 
 plt.title(
-    "Conservation of predicted Wzg epitopes across serotypes"
+    f"Conservation of predicted {GENE} epitopes across serotypes"
 )
 
 plt.tight_layout()
@@ -250,7 +250,7 @@ candidate_df.to_csv(
 plddt_root = Path("boltz_outputs/predictions")
 plddt_results = []
 
-'''for start,end in candidate_regions:
+for start,end in candidate_regions:
     for protein,protein_df in mapped.groupby("protein"):
 
         seq_name = protein.removesuffix("_A")
@@ -313,7 +313,9 @@ summary = (
         worst_variant_mean=("mean_plddt", "min"),
         best_variant_mean=("mean_plddt", "max")
     )
-)'''
+)
+
+print(summary)
 
 pae_results = []
 
@@ -373,7 +375,6 @@ pae_df.to_csv(
     f"{GENE}_epitope_conservation/{GENE}_candidate_pae.csv",
     index=False
 )
-
 print("\nLocal PAE summary:")
 
 pae_summary = (
@@ -439,7 +440,7 @@ comparison = pd.DataFrame(plot_data)
 
 
 # ============================================================
-# Plot whole Wzg protein
+# Plot whole gene protein
 # ============================================================
 
 fig, ax = plt.subplots(figsize=(16, 6))
@@ -479,7 +480,7 @@ ax.set_ylabel("Conservation (%)")
 ax.set_ylim(0, 105)
 
 ax.set_title(
-    "Wzg sequence conservation vs predicted epitope conservation"
+    f"{GENE} sequence conservation vs predicted epitope conservation"
 )
 
 ax.legend()
@@ -557,7 +558,7 @@ for start, end in regions:
     ax.set_ylim(0, 105)
 
     ax.set_title(
-        f"Wzg candidate region {start}-{end}"
+        f"{GENE} candidate region {start}-{end}"
     )
 
     ax.legend()

@@ -4,12 +4,14 @@ import re
 from pathlib import Path
 from Bio import SeqIO
 from Bio.PDB import PDBParser, PDBIO, Select
+from config import get_gene
+from extract_epitope_fragments import GENE
 
 # ============================================================
 # PATHS
 # ============================================================
 
-GENE = "wzg"
+GENE = get_gene()
 
 MSA_FILE = Path(f"aligned_cps/aligned_gene_{GENE}.fasta")
 
@@ -25,14 +27,12 @@ UNIQUE_FRAGMENTS = Path(
     f"{GENE}_unique_epitope_fragments.csv"
 )
 
-# Your 42 newly downloaded structures
 FRAGMENT_STRUCTURE_DIR = Path(
     f"{GENE}_epitope_conservation/"
     "epitope_fragments/"
     "predicted_structures"
 )
 
-# Change this if your original 64 Wzg structures live elsewhere
 FULL_STRUCTURE_DIR = Path("pdb_outputs/pdb_outputs")
 
 OUTPUT_DIR = Path(
